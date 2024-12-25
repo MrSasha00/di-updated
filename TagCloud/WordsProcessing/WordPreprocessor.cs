@@ -3,23 +3,18 @@ using TagCloud.WordsReader;
 
 namespace TagCloud.WordsProcessing;
 
-public class WordPreprocessor : IWordPreprocessor
+public class WordPreprocessor(
+	IBoringWordsProvider boringWordsProvider,
+	IWordsReader wordsReader,
+	IAppSettingsProvider appSettingsProvider)
+	: IWordPreprocessor
 {
-	private readonly IBoringWordProvider _boringWordProvider;
-	private readonly IWordsReader _wordsReader;
-	private readonly ISettingsProvider _settingsProvider;
-
-	public WordPreprocessor(IBoringWordProvider boringWordProvider, IWordsReader wordsReader, ISettingsProvider settingsProvider)
+	public string[] Process()
 	{
-		_boringWordProvider = boringWordProvider;
-		_wordsReader = wordsReader;
-		_settingsProvider = settingsProvider;
-	}
-	public IEnumerable<string> Process()
-	{
-		var strings = _wordsReader.Read(_settingsProvider.GetSettings().SourcePath);
-		return strings
+		var boringWords = boringWordsProvider.GetWords();
+		return wordsReader.Read(appSettingsProvider.AppSettings.SourcePath)
 			.Select(x => x.ToLower())
-			.Where(x => !_boringWordProvider.GetBoringWords().Contains(x));
+			.Where(x => !boringWords.Contains(x))
+			.ToArray();
 	}
 }

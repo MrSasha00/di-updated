@@ -4,34 +4,26 @@ using TagCloud.WordCounter;
 
 namespace TagCloud.CloudPainter;
 
-public class CloudPainter : ICloudPainter
+public class CloudPainter(IImageSettingsProvider imageSettingsProvider, IAppSettingsProvider appSettingsProvider)
+	: ICloudPainter
 {
-	private ISettingsProvider _settingsProvider;
-
-	public CloudPainter(ISettingsProvider settingsProvider)
+	public void Paint(Tag[] tags)
 	{
-		_settingsProvider = settingsProvider;
-	}
-
-	public void Paint(List<Tag> tags)
-	{
-		var settings = _settingsProvider.GetSettings();
-
-		using var bitmap = new Bitmap(settings.Width, settings.Height);
+		using var bitmap = new Bitmap(imageSettingsProvider.ImageSettings.Width,
+			imageSettingsProvider.ImageSettings.Height);
 		using var graphics = Graphics.FromImage(bitmap);
-		graphics.Clear(Color.White);
-		var fontFamily = new FontFamily(settings.FontFamily);
+		graphics.Clear(Color.FromName(imageSettingsProvider.ImageSettings.BackgroundColor));
+		var fontFamily = new FontFamily(imageSettingsProvider.ImageSettings.FontFamily);
 
 		var random = new Random();
 		foreach (var tag in tags)
 		{
-			var fontSize = 20;
-			var font = new Font(fontFamily, fontSize);
+			var font = new Font(fontFamily, tag.Weight);
 			var color = Color.FromArgb(random.Next(100, 256), random.Next(100, 256), random.Next(100, 256));
 			using var brush = new SolidBrush(color);
 			graphics.DrawString(tag.Word, font, brush, tag.Location);
 		}
 
-		bitmap.Save(settings.SavePath, System.Drawing.Imaging.ImageFormat.Png);
+		bitmap.Save(appSettingsProvider.AppSettings.SavePath, System.Drawing.Imaging.ImageFormat.Png);
 	}
 }
