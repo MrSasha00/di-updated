@@ -3,7 +3,7 @@ using TagCloud.WordsReader;
 
 namespace TagCloud.WordsProcessing;
 
-public class WordPreprocessor(
+internal class WordPreprocessor(
 	IBoringWordsProvider boringWordsProvider,
 	IWordsReader wordsReader,
 	IAppSettingsProvider appSettingsProvider)
@@ -11,6 +11,9 @@ public class WordPreprocessor(
 {
 	public string[] Process()
 	{
+		if (appSettingsProvider.AppSettings.SourcePath == null)
+			throw new ArgumentException("Source path is required");
+
 		var boringWords = boringWordsProvider.GetWords();
 		return wordsReader.Read(appSettingsProvider.AppSettings.SourcePath)
 			.Select(x => x.ToLower())

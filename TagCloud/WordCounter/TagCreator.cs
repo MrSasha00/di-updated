@@ -6,6 +6,9 @@ public class TagCreator(IImageSettingsProvider imageSettingsProvider) : ITagCrea
 {
 	public List<Tag> CreateTags(IEnumerable<string> words)
 	{
+		if (!words.Any())
+			return [..Array.Empty<Tag>()];
+
 		var tags = words.GetCountInGroups()
 			.Select(x =>
 				new Tag

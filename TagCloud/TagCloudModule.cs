@@ -13,7 +13,7 @@ public class TagCloudModule : Module
 {
 	protected override void Load(ContainerBuilder builder)
 	{
-		builder.RegisterType<App>();
+		builder.RegisterType<App>().As<IApp>();
 		builder.RegisterType<TxtWordsReader>().As<IWordsReader>();
 		builder.RegisterType<WordPreprocessor>().As<IWordPreprocessor>();
 		builder.RegisterType<TagCreator>().As<ITagCreator>();

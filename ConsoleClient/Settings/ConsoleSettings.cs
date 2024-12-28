@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using TagCloud.Settings;
 
 namespace ConsoleClient.Settings;
 
@@ -30,4 +31,23 @@ public class ConsoleSettings
 
 	[Option("maxFont", Default = 40, HelpText = "Максимальный шрифт.")]
 	public int FontSizeMax { get; set; }
+
+	public AppSettings GetAppSettings() =>
+		new()
+		{
+			SourcePath = SourcePath,
+			SavePath = SavePath,
+			BoringWordsPath = BoringWordsPath
+		};
+
+	public ImageSettings GetImageSettings() =>
+		new()
+		{
+			Width = Width,
+			Height = Height,
+			BackgroundColor = BackgroundColor,
+			FontFamily = FontFamily,
+			FontSizeMax = FontSizeMax,
+			FontSizeMin = FontSizeMin
+		};
 }

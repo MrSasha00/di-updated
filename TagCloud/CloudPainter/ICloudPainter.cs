@@ -2,7 +2,7 @@
 
 namespace TagCloud.CloudPainter;
 
-public interface ICloudPainter
+internal interface ICloudPainter
 {
 	void Paint(Tag[] tags);
 }

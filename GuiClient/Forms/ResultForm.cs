@@ -8,15 +8,14 @@ public class ResultForm : Form
 {
 	private readonly ILifetimeScope _lifetimeScope;
 
-	public ResultForm(ILifetimeScope lifetimeScope, Form mainForm)
+	public ResultForm(Form mainForm, ILifetimeScope lifetimeScope, AppSettings appSettings, ImageSettings imageSettings)
 	{
 		_lifetimeScope = lifetimeScope;
 
 		using var scope = _lifetimeScope.BeginLifetimeScope();
-		var imageSettingsProvider = scope.Resolve<IImageSettingsProvider>();
 
 		Text = "Результат";
-		Size = new Size(imageSettingsProvider.ImageSettings.Width, imageSettingsProvider.ImageSettings.Height + 70);
+		Size = new Size(imageSettings.Width, imageSettings.Height + 70);
 		FormBorderStyle = FormBorderStyle.FixedDialog;
 		MaximizeBox = false;
 		MinimizeBox = false;
@@ -29,18 +28,17 @@ public class ResultForm : Form
 			Close();
 		};
 
-		ShowCloudImage();
+		ShowCloudImage(appSettings, imageSettings);
 		Controls.Add(regenerateButton);
 	}
 
-	private void ShowCloudImage()
+	private void ShowCloudImage(AppSettings appSettings, ImageSettings imageSettings)
 	{
-		_lifetimeScope.Resolve<App>().Run();
-		var appSettingsProvider = _lifetimeScope.Resolve<IAppSettingsProvider>();
+		_lifetimeScope.Resolve<IApp>().Run(appSettings, imageSettings);
 		var picture = new PictureBox
 		{
 			SizeMode = PictureBoxSizeMode.AutoSize,
-			ImageLocation = appSettingsProvider.AppSettings.SavePath,
+			ImageLocation = appSettings.SavePath,
 			Dock = DockStyle.Top,
 		};
 		picture.Load();

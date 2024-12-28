@@ -1,8 +1,8 @@
 ﻿namespace TagCloud.Settings;
 
-public class AppSettings
+public record AppSettings
 {
-	public string SourcePath { get; init; } = string.Empty;
-	public string SavePath { get; init; } = "output.png";
-	public string BoringWordsPath { get; init; } = string.Empty;
+	public string? SourcePath { get; init; }
+	public string? SavePath { get; init; }
+	public string? BoringWordsPath { get; init; }
 }

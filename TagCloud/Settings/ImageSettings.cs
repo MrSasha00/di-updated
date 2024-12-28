@@ -1,11 +1,11 @@
 ﻿namespace TagCloud.Settings;
 
-public class ImageSettings
+public record ImageSettings
 {
 	public int Width { get; init; }
 	public int Height { get; init; }
-	public string BackgroundColor { get; init; } = string.Empty;
-	public string FontFamily { get; init; } = string.Empty;
+	public string? BackgroundColor { get; init; }
+	public string? FontFamily { get; init; }
 	public int FontSizeMax { get; init; }
 	public int FontSizeMin { get; init; }
 }

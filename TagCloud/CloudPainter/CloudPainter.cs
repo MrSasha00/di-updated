@@ -14,8 +14,8 @@ internal class CloudPainter(IImageSettingsProvider imageSettingsProvider,
 		using var bitmap = new Bitmap(imageSettingsProvider.ImageSettings.Width,
 			imageSettingsProvider.ImageSettings.Height);
 		using var graphics = Graphics.FromImage(bitmap);
-		graphics.Clear(Color.FromName(imageSettingsProvider.ImageSettings.BackgroundColor));
-		var fontFamily = new FontFamily(imageSettingsProvider.ImageSettings.FontFamily);
+		graphics.Clear(Color.FromName(imageSettingsProvider.ImageSettings.BackgroundColor ?? "white"));
+		var fontFamily = new FontFamily(imageSettingsProvider.ImageSettings.FontFamily ?? "arial");
 
 		var random = new Random();
 		foreach (var tag in tags)
@@ -26,6 +26,9 @@ internal class CloudPainter(IImageSettingsProvider imageSettingsProvider,
 			graphics.DrawString(tag.Word, font, brush, tag.Location);
 		}
 
-		bitmap.Save(appSettingsProvider.AppSettings.SavePath, System.Drawing.Imaging.ImageFormat.Png);
+		if(string.IsNullOrEmpty(appSettingsProvider.AppSettings.SavePath))
+			throw new ArgumentException("Save path is required");
+
+		imageSaver.SaveImage(bitmap, appSettingsProvider.AppSettings.SavePath);
 	}
 }

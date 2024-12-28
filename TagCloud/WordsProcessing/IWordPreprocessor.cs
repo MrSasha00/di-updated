@@ -1,6 +1,6 @@
 ﻿namespace TagCloud.WordsProcessing;
 
-public interface IWordPreprocessor
+internal interface IWordPreprocessor
 {
 	string[] Process();
 }

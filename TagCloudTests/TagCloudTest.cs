@@ -18,15 +18,13 @@ public class TagCloudTest
 	}
 
 	[TearDown]
-	public void TearDown()
-	{
+	public void TearDown() =>
 		_container.Dispose();
-	}
 
 	[Test]
 	public void Test()
 	{
-		_container.Resolve<IImageSettingsProvider>().ImageSettings = new ImageSettings
+		var imageSettings = new ImageSettings
 		{
 			Width = 500,
 			Height = 500,
@@ -35,14 +33,14 @@ public class TagCloudTest
 			FontSizeMax = 40,
 			FontSizeMin = 10
 		};
-		_container.Resolve<IAppSettingsProvider>().AppSettings = new AppSettings
+		var appSettings = new AppSettings
 		{
 			SourcePath = TestConstants.SamplesWordsTestFile,
 			SavePath = @"..\\..\..\test.png",
 			BoringWordsPath = TestConstants.BoringWordsTestFile
 		};
 
-		var app = _container.Resolve<App>();
-		app.Run();
+		var app = _container.Resolve<IApp>();
+		app.Run(appSettings, imageSettings);
 	}
 }

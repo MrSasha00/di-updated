@@ -14,7 +14,7 @@ public class TagPositioner(ICloudLayouter cloudLayouter, IImageSettingsProvider 
 		var bitmap = new Bitmap(size.Width, size.Height);
 		using var graphics = Graphics.FromImage(bitmap);
 
-		var fontFamily = new FontFamily(imageSettingsProvider.ImageSettings.FontFamily);
+		var fontFamily = new FontFamily(imageSettingsProvider.ImageSettings.FontFamily ?? "Arial");
 		var rectangles = new List<Rectangle>();
 
 		foreach (var tag in tags)

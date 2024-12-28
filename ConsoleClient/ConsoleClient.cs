@@ -5,12 +5,12 @@ using TagCloud.Client;
 
 namespace ConsoleClient;
 
-public class ConsoleClient(App app, ISettingsManager settingsManager) : IClient
+public class ConsoleClient(IApp app) : IClient
 {
 	public void Run()
 	{
 		Parser.Default.ParseArguments<ConsoleSettings>(Environment.GetCommandLineArgs())
-			.WithParsed(settingsManager.Set);
-		app.Run();
+			.WithParsed(settings => app.Run(settings.GetAppSettings(), settings.GetImageSettings()))
+			.WithNotParsed(_ => throw new ArgumentException("Invalid command line arguments"));
 	}
 }

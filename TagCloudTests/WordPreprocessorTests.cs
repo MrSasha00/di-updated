@@ -6,7 +6,7 @@ using TagCloud.WordsReader;
 
 namespace TagCloudTests;
 
-public class WordPreprocessorTests : BaseTest<WordPreprocessor>
+internal class WordPreprocessorTests : BaseTest<WordPreprocessor>
 {
 	[SetUp]
 	public override void SetUp()
@@ -15,7 +15,7 @@ public class WordPreprocessorTests : BaseTest<WordPreprocessor>
 
 		Mock<IAppSettingsProvider>()
 			.AppSettings
-			.Returns(new AppSettings());
+			.Returns(new AppSettings { SourcePath = "Path" });
 	}
 
 	[Test]

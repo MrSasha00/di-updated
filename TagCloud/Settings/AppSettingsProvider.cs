@@ -1,6 +1,6 @@
 ﻿namespace TagCloud.Settings;
 
-public class AppSettingsProvider : IAppSettingsProvider
+internal class AppSettingsProvider : IAppSettingsProvider
 {
 	public AppSettings AppSettings { get; set; } = null!;
 }

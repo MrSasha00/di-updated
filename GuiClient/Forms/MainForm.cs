@@ -177,8 +177,7 @@ public class MainForm : Form
 
 	private void GenerateButton_Click(object sender, EventArgs e)
 	{
-		_lifetimeScope.Resolve<IImageSettingsProvider>()
-			.ImageSettings = new ImageSettings
+		var imageSettings = new ImageSettings
 		{
 			Width = (int)_widthInput!.Value,
 			Height = (int)_heightInput!.Value,
@@ -187,15 +186,15 @@ public class MainForm : Form
 			FontSizeMax = (int)_minFontSizeInput!.Value,
 			FontSizeMin = (int)_maxFontSizeInput!.Value
 		};
-		_lifetimeScope.Resolve<IAppSettingsProvider>()
-			.AppSettings = new AppSettings
+
+		var appSettings = new AppSettings
 		{
 			SourcePath = _sourceFilePath,
 			BoringWordsPath = _boringWordsFilePath,
 			SavePath = "output.png"
 		};
 
-		var resultForm = new ResultForm(_lifetimeScope, this);
+		var resultForm = new ResultForm(this, _lifetimeScope, appSettings, imageSettings);
 		resultForm.Show();
 		Hide();
 	}

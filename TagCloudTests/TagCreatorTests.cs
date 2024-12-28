@@ -42,6 +42,6 @@ public class TagCreatorTests : BaseTest<TagCreator>
 
 		cherryTag.Weight.Should().Be(10);
 		bananaTag.Weight.Should().Be(40);
-		cherryTag.Weight.Should().BeGreaterThan(10).And.BeLessThan(40);
+		appleTag.Weight.Should().BeGreaterThan(10).And.BeLessThan(40);
 	}
 }

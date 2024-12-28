@@ -1,6 +1,6 @@
 ﻿namespace TagCloud.Settings;
 
-public class ImageSettingsProvider : IImageSettingsProvider
+internal class ImageSettingsProvider : IImageSettingsProvider
 {
 	public ImageSettings ImageSettings { get; set; } = null!;
 }
