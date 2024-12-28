@@ -21,6 +21,7 @@ public class TagCloudModule : Module
 		builder.RegisterType<AppSettingsProvider>().As<IAppSettingsProvider>().SingleInstance();
 		builder.RegisterType<ImageSettingsProvider>().As<IImageSettingsProvider>().SingleInstance();
 		builder.RegisterType<CloudPainter.CloudPainter>().As<ICloudPainter>();
+		builder.RegisterType<PngImageSaver>().As<IImageSaver>();
 		builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
 		builder.RegisterType<TagPositioner.TagPositioner>().As<ITagPositioner>();
 	}

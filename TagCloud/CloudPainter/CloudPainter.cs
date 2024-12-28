@@ -4,7 +4,9 @@ using TagCloud.WordCounter;
 
 namespace TagCloud.CloudPainter;
 
-public class CloudPainter(IImageSettingsProvider imageSettingsProvider, IAppSettingsProvider appSettingsProvider)
+internal class CloudPainter(IImageSettingsProvider imageSettingsProvider,
+	IAppSettingsProvider appSettingsProvider,
+	IImageSaver imageSaver)
 	: ICloudPainter
 {
 	public void Paint(Tag[] tags)
